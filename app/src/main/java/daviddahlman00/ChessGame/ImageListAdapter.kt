@@ -31,15 +31,74 @@ internal class ImageListAdapter internal constructor(context: Context, private v
         }
 
         //holder.name!!.text = this.itemList!![position]
-        holder.icon!!.setImageResource(R.mipmap.ic_launcher)
+       // holder.icon!!.setImageResource(R.mipmap.ic_launcher)
+        //holder.icon!!.setImageResource(R.drawable.piece_pd)
+
+        setBordString(holder, itemList)
+        holder.icon!!.setImageResource(itemList[position].getImageId(context))
         if ((itemList[position].xCord + itemList[position].yCord) % 2 == 1){
-            holder.box!!.setBackgroundColor(Color.parseColor("#000000"))
+            holder.box!!.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
         }else{
-            holder.box!!.setBackgroundColor(Color.parseColor("#737272"))
+            holder.box!!.setBackgroundColor(Color.parseColor("#FFA6A5A5"))
         }
 
 
         return convertView!!
+    }
+
+    fun setBordString(holder: ItemHolder, itemList: List<Position>){
+        for (pos in itemList){
+            when{
+                (pos.yCord == 0 && pos.xCord == 0) || (pos.yCord == 0 && pos.xCord == 7)->{
+                    pos.character = "rd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 0) || (pos.yCord == 7 && pos.xCord == 7)->{
+                    pos.character = "rl"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 1) || (pos.yCord == 0 && pos.xCord == 6)->{
+                    pos.character = "nd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 1) || (pos.yCord == 7 && pos.xCord == 6)->{
+                    pos.character = "nl"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 2) || (pos.yCord == 0 && pos.xCord == 5)->{
+                    pos.character = "bd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 2) || (pos.yCord == 7 && pos.xCord == 5)->{
+                    pos.character = "bl"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 3)->{
+                    pos.character = "qd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 3)->{
+                    pos.character = "ql"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 4)->{
+                    pos.character = "kd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 4)->{
+                    pos.character = "kl"
+                    pos.player = "light"
+                }
+                (pos.yCord == 1)->{
+                    pos.character = "pd"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 6)->{
+                    pos.character = "pl"
+                    pos.player = "light"
+                }
+            }
+        }
     }
 
     internal class ItemHolder {

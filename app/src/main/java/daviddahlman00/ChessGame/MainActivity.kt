@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
                 bord[position].clicked = true
             }else{
                 if ((bord[position].xCord + bord[position].yCord) % 2 == 1){
-                    v.setBackgroundColor(Color.parseColor("#000000"))
+                    v.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
                 }else{
-                    v.setBackgroundColor(Color.parseColor("#737272"))
+                    v.setBackgroundColor(Color.parseColor("#FFA6A5A5"))
                 }
                 bord[position].clicked = false
             }
