@@ -13,7 +13,7 @@ internal class ImageListAdapter internal constructor(context: Context, private v
     ArrayAdapter<ImageListAdapter.ItemHolder>(context, resource){
 
     override fun getCount(): Int {
-        return if (this.itemList != null) this.itemList.size else 0
+        return this.itemList.size
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -30,11 +30,9 @@ internal class ImageListAdapter internal constructor(context: Context, private v
             holder = convertView.tag as ItemHolder
         }
 
-        //holder.name!!.text = this.itemList!![position]
-       // holder.icon!!.setImageResource(R.mipmap.ic_launcher)
-        //holder.icon!!.setImageResource(R.drawable.piece_pd)
 
-        setBordString(holder, itemList)
+        setBordString(itemList)
+        //holder.icon!!.setImageResource(R.drawable.dark_bishop)
         holder.icon!!.setImageResource(itemList[position].getImageId(context))
         if ((itemList[position].xCord + itemList[position].yCord) % 2 == 1){
             holder.box!!.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
@@ -43,58 +41,58 @@ internal class ImageListAdapter internal constructor(context: Context, private v
         }
 
 
-        return convertView!!
+        return convertView
     }
 
-    fun setBordString(holder: ItemHolder, itemList: List<Position>){
+    private fun setBordString(itemList: List<Position>){
         for (pos in itemList){
             when{
                 (pos.yCord == 0 && pos.xCord == 0) || (pos.yCord == 0 && pos.xCord == 7)->{
-                    pos.character = "rd"
+                    pos.character = "dark_rook"
                     pos.player = "dark"
                 }
                 (pos.yCord == 7 && pos.xCord == 0) || (pos.yCord == 7 && pos.xCord == 7)->{
-                    pos.character = "rl"
+                    pos.character = "light_rook"
                     pos.player = "light"
                 }
                 (pos.yCord == 0 && pos.xCord == 1) || (pos.yCord == 0 && pos.xCord == 6)->{
-                    pos.character = "nd"
+                    pos.character = "dark_knight"
                     pos.player = "dark"
                 }
                 (pos.yCord == 7 && pos.xCord == 1) || (pos.yCord == 7 && pos.xCord == 6)->{
-                    pos.character = "nl"
+                    pos.character = "light_knight"
                     pos.player = "light"
                 }
                 (pos.yCord == 0 && pos.xCord == 2) || (pos.yCord == 0 && pos.xCord == 5)->{
-                    pos.character = "bd"
+                    pos.character = "dark_bishop"
                     pos.player = "dark"
                 }
                 (pos.yCord == 7 && pos.xCord == 2) || (pos.yCord == 7 && pos.xCord == 5)->{
-                    pos.character = "bl"
+                    pos.character = "light_bishop"
                     pos.player = "light"
                 }
                 (pos.yCord == 0 && pos.xCord == 3)->{
-                    pos.character = "qd"
+                    pos.character = "dark_queen"
                     pos.player = "dark"
                 }
                 (pos.yCord == 7 && pos.xCord == 3)->{
-                    pos.character = "ql"
+                    pos.character = "light_queen"
                     pos.player = "light"
                 }
                 (pos.yCord == 0 && pos.xCord == 4)->{
-                    pos.character = "kd"
+                    pos.character = "dark_king"
                     pos.player = "dark"
                 }
                 (pos.yCord == 7 && pos.xCord == 4)->{
-                    pos.character = "kl"
+                    pos.character = "light_king"
                     pos.player = "light"
                 }
                 (pos.yCord == 1)->{
-                    pos.character = "pd"
+                    pos.character = "dark_pawn"
                     pos.player = "dark"
                 }
                 (pos.yCord == 6)->{
-                    pos.character = "pl"
+                    pos.character = "light_pawn"
                     pos.player = "light"
                 }
             }
