@@ -36,7 +36,11 @@ class MainActivity : AppCompatActivity() {
 
                     val possibleMoves = bord.legalMove(bord.bord[position])
                     for (elm in possibleMoves){
-                        gridView[elm].setBackgroundColor(Color.parseColor("#FF018786"))
+                        if ((bord.bord[elm].xCord + bord.bord[elm].yCord) % 2 == 1){
+                            gridView[elm].setBackgroundColor(Color.parseColor("#016362"))
+                        }else{
+                            gridView[elm].setBackgroundColor(Color.parseColor("#039897"))
+                        }
                         moveList.add(elm)
                     }
                     activPosition = true
@@ -48,7 +52,11 @@ class MainActivity : AppCompatActivity() {
 
                     val possibleMoves = bord.legalMove(bord.bord[position])
                     for (elm in possibleMoves){
-                        gridView[elm].setBackgroundColor(Color.parseColor("#FF018786"))
+                        if ((bord.bord[elm].xCord + bord.bord[elm].yCord) % 2 == 1){
+                            gridView[elm].setBackgroundColor(Color.parseColor("#016362"))
+                        }else{
+                            gridView[elm].setBackgroundColor(Color.parseColor("#039897"))
+                        }
                         moveList.add(elm)
                     }
                     activPosition = true
