@@ -11,6 +11,8 @@ import androidx.core.view.get
 class MainActivity : AppCompatActivity() {
     private var activPosition = false
     private var whiteToGo = true
+    private val moveList = mutableListOf<Int>()
+    private var clickedPosision = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,30 +22,46 @@ class MainActivity : AppCompatActivity() {
         val bord = Bord()
         val adapter = ImageListAdapter(this, R.layout.item_list, bord.bord)
         gridView.adapter = adapter
-
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
-            if (!bord.bord[position].clicked){
+            //if (position in moveList)
+            if (position != clickedPosision){
                 if (whiteToGo && bord.bord[position].player =="light"){
                     unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
-                    bord.bord[position].clicked = true
+
+                    val possibleMoves = bord.legalMove(bord.bord[position])
+                    for (elm in possibleMoves){
+                        gridView[elm].setBackgroundColor(Color.parseColor("#FF018786"))
+                        moveList.add(elm)
+                    }
                     activPosition = true
+                    clickedPosision = position
                     messageFun(position, bord.bord)
                 }else if(!whiteToGo && bord.bord[position].player =="dark"){
                     unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
-                    bord.bord[position].clicked = true
+
+                    val possibleMoves = bord.legalMove(bord.bord[position])
+                    for (elm in possibleMoves){
+                        gridView[elm].setBackgroundColor(Color.parseColor("#FF018786"))
+                        moveList.add(elm)
+                    }
                     activPosition = true
+                    clickedPosision = position
                     messageFun(position, bord.bord)
                 }
 
             }else{
+                moveList.clear()
+                clickedPosision = -1
                 if ((bord.bord[position].xCord + bord.bord[position].yCord) % 2 == 1){
+                    unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
                 }else{
+                    unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FFA6A5A5"))
                 }
-                bord.bord[position].clicked = false
+
                 activPosition = false
             }
         }
@@ -57,9 +75,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun unacitvatePositions(bord :List<Position>, gridview : GridView){
-        for(pos in bord){
-            pos.clicked = false
-        }
         activPosition = false
         for (pos in 0 until gridview.adapter.count){
             if((bord[pos].xCord + bord[pos].yCord) % 2 == 1){
@@ -71,3 +86,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
