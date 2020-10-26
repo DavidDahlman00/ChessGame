@@ -23,7 +23,7 @@ internal class ImageListAdapter internal constructor(context: Context, private v
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(resource, null)
             holder = ItemHolder()
-            holder.box = convertView!!.findViewById(R.id.box)
+         //   holder.box = convertView!!.findViewById(R.id.box)
             holder.icon = convertView.findViewById(R.id.icon)
             holder.legal_move = convertView.findViewById(R.id.legal_square)
             convertView.tag = holder
@@ -35,13 +35,13 @@ internal class ImageListAdapter internal constructor(context: Context, private v
         setBordString(itemList)
         holder.icon!!.setImageResource(itemList[position].getImageId(context))
         if ((itemList[position].xCord + itemList[position].yCord) % 2 == 1){
-            holder.box!!.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
+            holder.icon!!.setBackgroundColor(Color.parseColor("#FF2C2A2A"))
         }else{
-            holder.box!!.setBackgroundColor(Color.parseColor("#FFA6A5A5"))
+            holder.icon!!.setBackgroundColor(Color.parseColor("#FFA6A5A5"))
         }
 
 
-        return convertView
+        return convertView!!
     }
 
     private fun setBordString(itemList: List<Position>){
@@ -100,7 +100,7 @@ internal class ImageListAdapter internal constructor(context: Context, private v
     }
 
     internal class ItemHolder {
-        var box: LinearLayout? = null
+       // var box: LinearLayout? = null
         var icon: ImageView? = null
         var legal_move: ImageView? = null
     }
