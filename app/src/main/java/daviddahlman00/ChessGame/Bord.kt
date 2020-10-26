@@ -15,16 +15,12 @@ class Bord() {
                 bord.add(Position(name = "col" + "," + "rows", character = "", player = "none", xCord = x, yCord = y))
             }
         }
-
+        setBordString()
     }
     private fun newBord(){
         bord.clear()
         makeBord()
     }
-    /*
-    private fun getPositionAt(x : Int, y : Int) : Position{
-
-    }*/
 
     fun legalMove(position : Position): List<Int>{
         val legalMoves = mutableListOf<Int>()
@@ -118,5 +114,58 @@ class Bord() {
 
         return legalMoves
     }
-
+    private fun setBordString(){
+        for (pos in bord){
+            when{
+                (pos.yCord == 0 && pos.xCord == 0) || (pos.yCord == 0 && pos.xCord == 7)->{
+                    pos.character = "dark_rook"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 0) || (pos.yCord == 7 && pos.xCord == 7)->{
+                    pos.character = "light_rook"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 1) || (pos.yCord == 0 && pos.xCord == 6)->{
+                    pos.character = "dark_knight"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 1) || (pos.yCord == 7 && pos.xCord == 6)->{
+                    pos.character = "light_knight"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 2) || (pos.yCord == 0 && pos.xCord == 5)->{
+                    pos.character = "dark_bishop"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 2) || (pos.yCord == 7 && pos.xCord == 5)->{
+                    pos.character = "light_bishop"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 3)->{
+                    pos.character = "dark_queen"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 3)->{
+                    pos.character = "light_queen"
+                    pos.player = "light"
+                }
+                (pos.yCord == 0 && pos.xCord == 4)->{
+                    pos.character = "dark_king"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 7 && pos.xCord == 4)->{
+                    pos.character = "light_king"
+                    pos.player = "light"
+                }
+                (pos.yCord == 1)->{
+                    pos.character = "dark_pawn"
+                    pos.player = "dark"
+                }
+                (pos.yCord == 6)->{
+                    pos.character = "light_pawn"
+                    pos.player = "light"
+                }
+            }
+        }
+    }
 }
