@@ -25,6 +25,12 @@ class Bord() {
     fun legalMove(position : Position): List<Int>{
         val legalMoves = mutableListOf<Int>()
         when(position.character){
+            "dark_king" -> {
+                darkKing(position, legalMoves)
+            }
+            "light_king" -> {
+                lightKing(position, legalMoves)
+            }
             "dark_knight"  -> {
                 darkKnight(position, legalMoves)
             }
@@ -135,6 +141,68 @@ class Bord() {
             if (bord[position.xCord - 1 + 8 * (position.yCord - 2)].player!="light"){
                 legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 2))
             }
+        }
+    }
+
+    private fun lightKing(position: Position, legalMoves: MutableList<Int>){
+        if ((position.xCord + 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "light")){
+         legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
+        }
+        if ((position.xCord - 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "light")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord))
+        }
+        if ((position.yCord + 1 in 0..7) && (bord[position.xCord + 8 * (position.yCord + 1)].player != "light")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + 1))
+        }
+        if ((position.yCord - 1 in 0..7) && (bord[position.xCord + 8 * (position.yCord - 1)].player != "light")){
+            legalMoves.add(position.xCord + 8 * (position.yCord - 1))
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord + 1)].player != "light")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 1))
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord - 1)].player != "light")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord + 1)].player != "light")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord - 1)].player != "light")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 1))
+        }
+    }
+
+    private fun darkKing(position: Position, legalMoves: MutableList<Int>){
+        if ((position.xCord + 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "dark")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
+        }
+        if ((position.xCord - 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "dark")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord))
+        }
+        if ((position.yCord + 1 in 0..7) && (bord[position.xCord + 8 * (position.yCord + 1)].player != "dark")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + 1))
+        }
+        if ((position.yCord - 1 in 0..7) && (bord[position.xCord + 8 * (position.yCord - 1)].player != "dark")){
+            legalMoves.add(position.xCord + 8 * (position.yCord - 1))
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord + 1)].player != "dark")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 1))
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord - 1)].player != "dark")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord + 1)].player != "dark")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord - 1)].player != "dark")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 1))
         }
     }
 
