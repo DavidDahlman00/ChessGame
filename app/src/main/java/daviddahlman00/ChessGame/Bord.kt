@@ -25,95 +25,22 @@ class Bord() {
     fun legalMove(position : Position): List<Int>{
         val legalMoves = mutableListOf<Int>()
         when(position.character){
-            "dark_knight"  ->{
-                if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
-                    if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="dark"){
-                        legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
-                    }
-                }
-                if ((position.xCord + 2 in 0..7) && (position.yCord - 1 in 0..7)){
-                    if (bord[position.xCord + 2 + 8 * (position.yCord - 1)].player!="dark"){
-                        legalMoves.add(position.xCord + 2 + 8 * (position.yCord - 1))
-                    }
-                }
-                if ((position.xCord - 2 in 0..7) && (position.yCord + 1 in 0..7)){
-                    if (bord[position.xCord - 2 + 8 * (position.yCord + 1)].player!="dark"){
-                        legalMoves.add(position.xCord - 2 + 8 * (position.yCord + 1))
-                    }
-                }
-                if ((position.xCord - 2 in 0..7) && (position.yCord - 1 in 0..7)){
-                    if (bord[position.xCord - 2 + 8 * (position.yCord - 1)].player!="dark"){
-                        legalMoves.add(position.xCord - 2 + 8 * (position.yCord - 1))
-                    }
-                }
-                if ((position.xCord + 1 in 0..7) && (position.yCord + 2 in 0..7)){
-                    if (bord[position.xCord + 1 + 8 * (position.yCord + 2)].player!="dark"){
-                        legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 2))
-                    }
-                }
-                if ((position.xCord + 1 in 0..7) && (position.yCord - 2 in 0..7)){
-                    if (bord[position.xCord + 1 + 8 * (position.yCord - 2)].player!="dark"){
-                        legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 2))
-                    }
-                }
-                if ((position.xCord - 1 in 0..7) && (position.yCord + 2 in 0..7)){
-                    if (bord[position.xCord - 1 + 8 * (position.yCord + 2)].player!="dark"){
-                        legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 2))
-                    }
-                }
-                if ((position.xCord - 1 in 0..7) && (position.yCord - 2 in 0..7)){
-                    if (bord[position.xCord - 1 + 8 * (position.yCord - 2)].player!="dark"){
-                        legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 2))
-                    }
-                }
-
+            "dark_knight"  -> {
+                darkKnight(position, legalMoves)
             }
-            "light_knight"  ->{
-                if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
-                    if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="light"){
-                        legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
-                    }
-                }
-                if ((position.xCord + 2 in 0..7) && (position.yCord - 1 in 0..7)){
-                    if (bord[position.xCord + 2 + 8 * (position.yCord - 1)].player!="light"){
-                        legalMoves.add(position.xCord + 2 + 8 * (position.yCord - 1))
-                    }
-                }
-                if ((position.xCord - 2 in 0..7) && (position.yCord + 1 in 0..7)){
-                    if (bord[position.xCord - 2 + 8 * (position.yCord + 1)].player!="light"){
-                        legalMoves.add(position.xCord - 2 + 8 * (position.yCord + 1))
-                    }
-                }
-                if ((position.xCord - 2 in 0..7) && (position.yCord - 1 in 0..7)){
-                    if (bord[position.xCord - 2 + 8 * (position.yCord - 1)].player!="light"){
-                        legalMoves.add(position.xCord - 2 + 8 * (position.yCord - 1))
-                    }
-                }
-                if ((position.xCord + 1 in 0..7) && (position.yCord + 2 in 0..7)){
-                    if (bord[position.xCord + 1 + 8 * (position.yCord + 2)].player!="light"){
-                        legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 2))
-                    }
-                }
-                if ((position.xCord + 1 in 0..7) && (position.yCord - 2 in 0..7)){
-                    if (bord[position.xCord + 1 + 8 * (position.yCord - 2)].player!="light"){
-                        legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 2))
-                    }
-                }
-                if ((position.xCord - 1 in 0..7) && (position.yCord + 2 in 0..7)){
-                    if (bord[position.xCord - 1 + 8 * (position.yCord + 2)].player!="light"){
-                        legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 2))
-                    }
-                }
-                if ((position.xCord - 1 in 0..7) && (position.yCord - 2 in 0..7)){
-                    if (bord[position.xCord - 1 + 8 * (position.yCord - 2)].player!="light"){
-                        legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 2))
-                    }
-                }
+            "light_knight"  -> {
+               lightKnight(position, legalMoves)
+            }
+            "dark_pawn" -> {
+                darkPawn(position, legalMoves)
+            }
+            "light_pawn" -> {
+                lightPawn(position, legalMoves)
             }
         }
-
         return legalMoves
     }
+
     private fun setBordString(){
         for (pos in bord){
             when{
@@ -166,6 +93,125 @@ class Bord() {
                     pos.player = "light"
                 }
             }
+        }
+    }
+    private fun lightKnight(position: Position, legalMoves: MutableList<Int>){
+        if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
+            if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="light"){
+                legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
+            }
+        }
+        if ((position.xCord + 2 in 0..7) && (position.yCord - 1 in 0..7)){
+            if (bord[position.xCord + 2 + 8 * (position.yCord - 1)].player!="light"){
+                legalMoves.add(position.xCord + 2 + 8 * (position.yCord - 1))
+            }
+        }
+        if ((position.xCord - 2 in 0..7) && (position.yCord + 1 in 0..7)){
+            if (bord[position.xCord - 2 + 8 * (position.yCord + 1)].player!="light"){
+                legalMoves.add(position.xCord - 2 + 8 * (position.yCord + 1))
+            }
+        }
+        if ((position.xCord - 2 in 0..7) && (position.yCord - 1 in 0..7)){
+            if (bord[position.xCord - 2 + 8 * (position.yCord - 1)].player!="light"){
+                legalMoves.add(position.xCord - 2 + 8 * (position.yCord - 1))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord + 2 in 0..7)){
+            if (bord[position.xCord + 1 + 8 * (position.yCord + 2)].player!="light"){
+                legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 2))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord - 2 in 0..7)){
+            if (bord[position.xCord + 1 + 8 * (position.yCord - 2)].player!="light"){
+                legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 2))
+            }
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord + 2 in 0..7)){
+            if (bord[position.xCord - 1 + 8 * (position.yCord + 2)].player!="light"){
+                legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 2))
+            }
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord - 2 in 0..7)){
+            if (bord[position.xCord - 1 + 8 * (position.yCord - 2)].player!="light"){
+                legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 2))
+            }
+        }
+    }
+
+    private fun darkKnight(position : Position, legalMoves : MutableList<Int>){
+        if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
+            if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="dark"){
+                legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
+            }
+        }
+        if ((position.xCord + 2 in 0..7) && (position.yCord - 1 in 0..7)){
+            if (bord[position.xCord + 2 + 8 * (position.yCord - 1)].player!="dark"){
+                legalMoves.add(position.xCord + 2 + 8 * (position.yCord - 1))
+            }
+        }
+        if ((position.xCord - 2 in 0..7) && (position.yCord + 1 in 0..7)){
+            if (bord[position.xCord - 2 + 8 * (position.yCord + 1)].player!="dark"){
+                legalMoves.add(position.xCord - 2 + 8 * (position.yCord + 1))
+            }
+        }
+        if ((position.xCord - 2 in 0..7) && (position.yCord - 1 in 0..7)){
+            if (bord[position.xCord - 2 + 8 * (position.yCord - 1)].player!="dark"){
+                legalMoves.add(position.xCord - 2 + 8 * (position.yCord - 1))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord + 2 in 0..7)){
+            if (bord[position.xCord + 1 + 8 * (position.yCord + 2)].player!="dark"){
+                legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 2))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord - 2 in 0..7)){
+            if (bord[position.xCord + 1 + 8 * (position.yCord - 2)].player!="dark"){
+                legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 2))
+            }
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord + 2 in 0..7)){
+            if (bord[position.xCord - 1 + 8 * (position.yCord + 2)].player!="dark"){
+                legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 2))
+            }
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord - 2 in 0..7)){
+            if (bord[position.xCord - 1 + 8 * (position.yCord - 2)].player!="dark"){
+                legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 2))
+            }
+        }
+    }
+
+    private fun lightPawn(position : Position, legalMoves : MutableList<Int>){
+        if ((position.yCord - 1 in 0..7)&& (bord[position.xCord + 8 * (position.yCord - 1)].player == "none")){
+            legalMoves.add(position.xCord + 8 * (position.yCord - 1))
+            if ((position.yCord == 6) && (bord[position.xCord + 8 * (position.yCord - 2)].player == "none")){
+                legalMoves.add(position.xCord + 8 * (position.yCord - 2))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord - 1)].player == "dark")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord - 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord - 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord - 1)].player == "dark")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord - 1))
+        }
+    }
+
+    private fun darkPawn(position : Position, legalMoves : MutableList<Int>){
+        if ((position.yCord + 1 in 0..7)&& (bord[position.xCord + 8 * (position.yCord + 1)].player == "none")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + 1))
+            if ((position.yCord == 1) && (bord[position.xCord + 8 * (position.yCord + 2)].player == "none")){
+                legalMoves.add(position.xCord + 8 * (position.yCord + 2))
+            }
+        }
+        if ((position.xCord + 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord + 1 + 8 * (position.yCord + 1)].player == "light")){
+            legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 1))
+        }
+        if ((position.xCord - 1 in 0..7) && (position.yCord + 1 in 0..7)
+            && (bord[position.xCord - 1 + 8 * (position.yCord + 1)].player == "light")){
+            legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
         }
     }
 }
