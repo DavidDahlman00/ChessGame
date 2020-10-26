@@ -43,6 +43,12 @@ class Bord() {
             "light_pawn" -> {
                 lightPawn(position, legalMoves)
             }
+            "dark_rook" -> {
+                darkRook(position, legalMoves)
+            }
+            "light_rook" -> {
+                lightRook(position, legalMoves)
+            }
         }
         return legalMoves
     }
@@ -280,6 +286,76 @@ class Bord() {
         if ((position.xCord - 1 in 0..7) && (position.yCord + 1 in 0..7)
             && (bord[position.xCord - 1 + 8 * (position.yCord + 1)].player == "light")){
             legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
+        }
+    }
+
+    private fun lightRook(position: Position, legalMoves: MutableList<Int>){
+        var i = 1
+        while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "light")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord))
+            if (bord[position.xCord + i + 8 * (position.yCord)].player == "dark"){
+                break
+            }
+            i++
+        }
+        i = -1
+        while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "light")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord))
+            if (bord[position.xCord + i + 8 * (position.yCord)].player == "dark"){
+                break
+            }
+            i--
+        }
+        i = 1
+        while ((position.yCord + i in 0..7) && (bord[position.xCord + 8 * (position.yCord + i)].player != "light")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + i))
+            if (bord[position.xCord + 8 * (position.yCord + i)].player == "dark"){
+                break
+            }
+            i++
+        }
+        i = -1
+        while ((position.yCord + i in 0..7) && (bord[position.xCord + 8 * (position.yCord + i)].player != "light")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + i))
+            if (bord[position.xCord + 8 * (position.yCord + i)].player == "dark"){
+                break
+            }
+            i--
+        }
+    }
+
+    private fun darkRook(position: Position, legalMoves: MutableList<Int>){
+        var i = 1
+        while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "dark")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord))
+            if (bord[position.xCord + i + 8 * (position.yCord)].player == "light"){
+                break
+            }
+            i++
+        }
+        i = -1
+        while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "dark")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord))
+            if (bord[position.xCord + i + 8 * (position.yCord)].player == "light"){
+                break
+            }
+            i--
+        }
+        i = 1
+        while ((position.yCord + i in 0..7) && (bord[position.xCord + 8 * (position.yCord + i)].player != "dark")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + i))
+            if (bord[position.xCord + 8 * (position.yCord + i)].player == "light"){
+                break
+            }
+            i++
+        }
+        i = -1
+        while ((position.yCord + i in 0..7) && (bord[position.xCord + 8 * (position.yCord + i)].player != "dark")){
+            legalMoves.add(position.xCord + 8 * (position.yCord + i))
+            if (bord[position.xCord + 8 * (position.yCord + i)].player == "light"){
+                break
+            }
+            i--
         }
     }
 }
