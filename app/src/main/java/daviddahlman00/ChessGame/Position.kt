@@ -7,6 +7,6 @@ class Position(val name : String, var character : String = "", var player : Stri
         return context.resources.getIdentifier("drawable/$character", null, context.packageName)
     }
     fun getPosition() : Int{
-        return xCord + 8 * yCord
+        return xCord + (8 * yCord)
     }
 }

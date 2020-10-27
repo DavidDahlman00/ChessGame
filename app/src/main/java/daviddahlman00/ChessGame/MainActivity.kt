@@ -116,11 +116,11 @@ class MainActivity : AppCompatActivity() {
 
         when(bord.bord[to].character){
             "dark_king" -> {
-                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
+                val pos = bord.bord[to].getPosition()
                 bord.setDarkKingPosition(pos)
             }
             "light_king" -> {
-                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
+                val pos = bord.bord[to].getPosition()
                 bord.setLightKingPosition(pos)
             }
         }

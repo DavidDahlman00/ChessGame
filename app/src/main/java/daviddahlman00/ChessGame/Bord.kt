@@ -1,7 +1,7 @@
 package daviddahlman00.ChessGame
 
 class Bord() {
-    val bord = mutableListOf<Position>()
+    var bord = mutableListOf<Position>()
     private var lightKingPosition = 60
     private var darkKingPosition = 4
     private var schackLight = false
@@ -95,7 +95,7 @@ class Bord() {
                lightKnight(position, legalMoves, bord)
             }
             "dark_pawn" -> {
-                darkPawn(position, legalMoves, bord)
+                darkPawn(position, legalMoves, this)
             }
             "light_pawn" -> {
                 lightPawn(position, legalMoves, bord)
@@ -431,28 +431,52 @@ class Bord() {
         }
     }
 
-    private fun darkPawn(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
+    private fun darkPawn(position: Position, legalMoves: MutableList<Int>, currentBord: Bord){
         if ((position.yCord + 1 in 0..7)&& (bord[position.xCord + 8 * (position.yCord + 1)].player == "none")){
-            legalMoves.add(position.xCord + 8 * (position.yCord + 1))
+           val toAdd = schackCheck(position, bord[position.xCord + 8 * (position.yCord + 1)], this)
+            if (toAdd > -1){
+                legalMoves.add(toAdd)
+            }
+            //legalMoves.add(position.xCord + 8 * (position.yCord + 1))
             if ((position.yCord == 1) && (bord[position.xCord + 8 * (position.yCord + 2)].player == "none")){
-                legalMoves.add(position.xCord + 8 * (position.yCord + 2))
+                val toAdd = schackCheck(position, bord[position.xCord + 8 * (position.yCord + 2)], this)
+                if (toAdd > -1){
+                    legalMoves.add(toAdd)
+                }
+                //legalMoves.add(position.xCord + 8 * (position.yCord + 2))
             }
         }
         if ((position.xCord + 1 in 0..7) && (position.yCord + 1 in 0..7)
             && (bord[position.xCord + 1 + 8 * (position.yCord + 1)].player == "light")){
-            legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 1))
+            val toAdd = schackCheck(position, bord[position.xCord + 1 + 8 * (position.yCord + 1)], this)
+            if (toAdd > -1){
+                legalMoves.add(toAdd)
+            }
+            //legalMoves.add(position.xCord + 1 + 8 * (position.yCord + 1))
         }
         if ((position.xCord - 1 in 0..7) && (position.yCord + 1 in 0..7)
             && (bord[position.xCord - 1 + 8 * (position.yCord + 1)].player == "light")){
-            legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
+            val toAdd = schackCheck(position, bord[position.xCord - 1 + 8 * (position.yCord + 1)], this)
+            if (toAdd > -1){
+                legalMoves.add(toAdd)
+            }
+            //legalMoves.add(position.xCord - 1 + 8 * (position.yCord + 1))
         }
         if ((position.xCord + 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player == "light")
             && bord[position.xCord + 1 + 8 * (position.yCord)].enPassant){
-            legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
+            val toAdd = schackCheck(position, bord[position.xCord + 1 + 8 * (position.yCord)], this)
+            if (toAdd > -1){
+                legalMoves.add(toAdd)
+            }
+            //legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
         }
         if ((position.xCord - 1 in 0..7) && (bord[position.xCord - 1 + 8 * (position.yCord)].player == "light")
             && bord[position.xCord - 1 + 8 * (position.yCord)].enPassant){
-            legalMoves.add(position.xCord - 1 + 8 * (position.yCord))
+            val toAdd = schackCheck(position, bord[position.xCord - 1 + 8 * (position.yCord)], this)
+            if (toAdd > -1){
+                legalMoves.add(toAdd)
+            }
+            //legalMoves.add(position.xCord - 1 + 8 * (position.yCord))
         }
     }
 
@@ -524,5 +548,20 @@ class Bord() {
             }
             i--
         }
+    }
+    fun schackCheck(from: Position, to: Position, currentBord: Bord) : Int{
+        val newBord = Bord()
+        newBord.bord = currentBord.bord
+        newBord.lightKingPosition = currentBord.lightKingPosition
+        newBord.darkKingPosition = currentBord.darkKingPosition
+        val whiteToGo = (newBord.bord[from.getPosition()].player == "light")
+
+        newBord.bord[to.getPosition()].player = newBord.bord[from.getPosition()].player
+        newBord.bord[from.getPosition()].player = "none"
+        return to.getPosition()
+        if (!newBord.isSchack(whiteToGo)){
+           return to.getPosition()
+        }
+        return -1
     }
 }
