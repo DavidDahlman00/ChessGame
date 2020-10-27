@@ -236,10 +236,10 @@ class Bord() {
         }
         i = 1
         var j = -1
-        while ((position.xCord + i in 0..7) && (position.yCord - j in 0..7)
-            && (bord[position.xCord + i + 8 * (position.yCord - j)].player != "dark")){
-            legalMoves.add(position.xCord + i + 8 * (position.yCord - j))
-            if (bord[position.xCord + i + 8 * (position.yCord - j)].player == "light"){
+        while ((position.xCord + i in 0..7) && (position.yCord + j in 0..7)
+            && (bord[position.xCord + i + 8 * (position.yCord + j)].player != "dark")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord + j))
+            if (bord[position.xCord + i + 8 * (position.yCord + j)].player == "light"){
                 break
             }
             i++
@@ -247,10 +247,10 @@ class Bord() {
         }
         i = -1
         j = 1
-        while ((position.xCord + i in 0..7) && (position.yCord - j in 0..7)
-            && (bord[position.xCord + i + 8 * (position.yCord - j)].player != "dark")){
-            legalMoves.add(position.xCord + i + 8 * (position.yCord - j))
-            if (bord[position.xCord + i + 8 * (position.yCord - j)].player == "light"){
+        while ((position.xCord + i in 0..7) && (position.yCord + j in 0..7)
+            && (bord[position.xCord + i + 8 * (position.yCord + j)].player != "dark")){
+            legalMoves.add(position.xCord + i + 8 * (position.yCord + j))
+            if (bord[position.xCord + i + 8 * (position.yCord + j)].player == "light"){
                 break
             }
             i--
