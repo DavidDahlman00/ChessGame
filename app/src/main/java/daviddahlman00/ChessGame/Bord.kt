@@ -77,42 +77,42 @@ class Bord() {
         val legalMoves = mutableListOf<Int>()
         when(position.character){
             "dark_bishop" -> {
-                darkBishop(position, legalMoves)
+                darkBishop(position, legalMoves, bord)
             }
             "light_bishop" -> {
-                lightBishop(position, legalMoves)
+                lightBishop(position, legalMoves, bord)
             }
             "dark_king" -> {
-                darkKing(position, legalMoves)
+                darkKing(position, legalMoves, bord)
             }
             "light_king" -> {
-                lightKing(position, legalMoves)
+                lightKing(position, legalMoves, bord)
             }
             "dark_knight"  -> {
-                darkKnight(position, legalMoves)
+                darkKnight(position, legalMoves, bord)
             }
             "light_knight"  -> {
-               lightKnight(position, legalMoves)
+               lightKnight(position, legalMoves, bord)
             }
             "dark_pawn" -> {
-                darkPawn(position, legalMoves)
+                darkPawn(position, legalMoves, bord)
             }
             "light_pawn" -> {
-                lightPawn(position, legalMoves)
+                lightPawn(position, legalMoves, bord)
             }
             "dark_queen" -> {
-                darkBishop(position, legalMoves)
-                darkRook(position, legalMoves)
+                darkBishop(position, legalMoves, bord)
+                darkRook(position, legalMoves, bord)
             }
             "light_queen" -> {
-                lightBishop(position, legalMoves)
-                lightRook(position, legalMoves)
+                lightBishop(position, legalMoves, bord)
+                lightRook(position, legalMoves, bord)
             }
             "dark_rook" -> {
-                darkRook(position, legalMoves)
+                darkRook(position, legalMoves, bord)
             }
             "light_rook" -> {
-                lightRook(position, legalMoves)
+                lightRook(position, legalMoves, bord)
             }
         }
         return legalMoves
@@ -173,7 +173,7 @@ class Bord() {
         }
     }
 
-    private fun lightBishop(position: Position, legalMoves: MutableList<Int>){
+    private fun lightBishop(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         var i = 1
         while ((position.xCord + i in 0..7) && (position.yCord + i in 0..7) &&
             (bord[position.xCord + i + 8 * (position.yCord + i)].player != "light")){
@@ -215,7 +215,7 @@ class Bord() {
             j++
         }
     }
-    private fun darkBishop(position: Position, legalMoves: MutableList<Int>){
+    private fun darkBishop(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         var i = 1
         while ((position.xCord + i in 0..7) && (position.yCord + i in 0..7) &&
             (bord[position.xCord + i + 8 * (position.yCord + i)].player != "dark")){
@@ -258,7 +258,7 @@ class Bord() {
         }
     }
 
-    private fun lightKnight(position: Position, legalMoves: MutableList<Int>){
+    private fun lightKnight(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
             if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="light"){
                 legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
@@ -301,7 +301,7 @@ class Bord() {
         }
     }
 
-    private fun lightKing(position: Position, legalMoves: MutableList<Int>){
+    private fun lightKing(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.xCord + 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "light")){
          legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
         }
@@ -332,7 +332,7 @@ class Bord() {
         }
     }
 
-    private fun darkKing(position: Position, legalMoves: MutableList<Int>){
+    private fun darkKing(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.xCord + 1 in 0..7) && (bord[position.xCord + 1 + 8 * (position.yCord)].player != "dark")){
             legalMoves.add(position.xCord + 1 + 8 * (position.yCord))
         }
@@ -363,7 +363,7 @@ class Bord() {
         }
     }
 
-    private fun darkKnight(position : Position, legalMoves : MutableList<Int>){
+    private fun darkKnight(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.xCord + 2 in 0..7) && (position.yCord + 1 in 0..7)){
             if (bord[position.xCord + 2 + 8 * (position.yCord + 1)].player!="dark"){
                 legalMoves.add(position.xCord + 2 + 8 * (position.yCord + 1))
@@ -406,7 +406,7 @@ class Bord() {
         }
     }
 
-    private fun lightPawn(position : Position, legalMoves : MutableList<Int>){
+    private fun lightPawn(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.yCord - 1 in 0..7)&& (bord[position.xCord + 8 * (position.yCord - 1)].player == "none")){
             legalMoves.add(position.xCord + 8 * (position.yCord - 1))
             if ((position.yCord == 6) && (bord[position.xCord + 8 * (position.yCord - 2)].player == "none")){
@@ -431,7 +431,7 @@ class Bord() {
         }
     }
 
-    private fun darkPawn(position : Position, legalMoves : MutableList<Int>){
+    private fun darkPawn(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         if ((position.yCord + 1 in 0..7)&& (bord[position.xCord + 8 * (position.yCord + 1)].player == "none")){
             legalMoves.add(position.xCord + 8 * (position.yCord + 1))
             if ((position.yCord == 1) && (bord[position.xCord + 8 * (position.yCord + 2)].player == "none")){
@@ -456,7 +456,7 @@ class Bord() {
         }
     }
 
-    private fun lightRook(position: Position, legalMoves: MutableList<Int>){
+    private fun lightRook(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         var i = 1
         while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "light")){
             legalMoves.add(position.xCord + i + 8 * (position.yCord))
@@ -491,7 +491,7 @@ class Bord() {
         }
     }
 
-    private fun darkRook(position: Position, legalMoves: MutableList<Int>){
+    private fun darkRook(position: Position, legalMoves: MutableList<Int>, currentBord: MutableList<Position>){
         var i = 1
         while ((position.xCord + i in 0..7) && (bord[position.xCord + i + 8 * (position.yCord)].player != "dark")){
             legalMoves.add(position.xCord + i + 8 * (position.yCord))
