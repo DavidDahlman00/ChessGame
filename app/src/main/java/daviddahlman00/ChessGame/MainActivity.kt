@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val moveList = mutableListOf<Int>()
     private var clickedPosision = -1
     private lateinit var toGoText : TextView
-    private lateinit var shackText : TextView
+    private lateinit var schackText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val gridView = findViewById<GridView>(R.id.gridview)
         val bord = Bord()
         toGoText = findViewById(R.id.player_to_go)
-        shackText = findViewById(R.id.shack_text)
+        schackText = findViewById(R.id.schack_text)
         val adapter = ImageListAdapter(this, R.layout.item_list, bord.bord)
         gridView.adapter = adapter
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     activPosition = true
                     clickedPosision = position
                     messageFun(position, bord.bord)
-                }else if(!whiteToGo && bord.bord[position].player =="dark"){
+                }else if((!whiteToGo && bord.bord[position].player =="dark") && !(bord.legalMove(bord.bord[position]).isNullOrEmpty())){
                     unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
 
@@ -89,12 +89,21 @@ class MainActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT).show()
     }
 
+    private fun enPassant(from : Int, to : Int, bord: Bord){
+        if ((bord.bord[from].character == "light_pawn") && (bord.bord[from].yCord == 6) && (bord.bord[to].yCord == 4)){
+            bord.bord[from].enPassant = true
+        }else bord.bord[from].enPassant = (bord.bord[from].character == "dark_pawn") && (bord.bord[from].yCord == 1) && (bord.bord[to].yCord == 3)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun move(from : Int, to : Int, bord: Bord){
+        enPassant(from, to, bord)
         bord.bord[to].character = bord.bord[from].character
         bord.bord[to].player = bord.bord[from].player
+        bord.bord[to].enPassant = bord.bord[from].enPassant
         bord.bord[from].character = ""
         bord.bord[from].player = "none"
+        bord.bord[from].enPassant = false
         clickedPosision = -1
         moveList.clear()
         whiteToGo = !whiteToGo
@@ -116,8 +125,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (bord.isShack(whiteToGo)){
-            shackText.text = "Shack"
+        if (bord.isSchack(whiteToGo)){
+            schackText.text = "Schack"
         }
     }
 
