@@ -1,5 +1,6 @@
 package daviddahlman00.ChessGame
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val moveList = mutableListOf<Int>()
     private var clickedPosision = -1
     private lateinit var toGoText : TextView
+    private lateinit var shackText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         val gridView = findViewById<GridView>(R.id.gridview)
         val bord = Bord()
-        toGoText = findViewById<TextView>(R.id.player_to_go)
+        toGoText = findViewById(R.id.player_to_go)
+        shackText = findViewById(R.id.shack_text)
         val adapter = ImageListAdapter(this, R.layout.item_list, bord.bord)
         gridView.adapter = adapter
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
@@ -30,7 +33,8 @@ class MainActivity : AppCompatActivity() {
                 move(clickedPosision, position, bord)
                 adapter.notifyDataSetChanged()
             }else  if (position != clickedPosision){
-                if (whiteToGo && bord.bord[position].player =="light"){
+                if ((whiteToGo && bord.bord[position].player =="light")
+                    && !(bord.legalMove(bord.bord[position]).isNullOrEmpty())){
                     unacitvatePositions(bord.bord, gridView)
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
 
@@ -85,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT).show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun move(from : Int, to : Int, bord: Bord){
         bord.bord[to].character = bord.bord[from].character
         bord.bord[to].player = bord.bord[from].player
@@ -93,15 +98,28 @@ class MainActivity : AppCompatActivity() {
         clickedPosision = -1
         moveList.clear()
         whiteToGo = !whiteToGo
+
         if (whiteToGo){
             toGoText.text = "White to go!"
         }else{
             toGoText.text = "Black to go!"
         }
 
+        when(bord.bord[to].character){
+            "dark_king" -> {
+                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
+                bord.setDarkKingPosition(pos)
+            }
+            "light_king" -> {
+                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
+                bord.setLightKingPosition(pos)
+            }
+        }
+
+        if (bord.isShack(whiteToGo)){
+            shackText.text = "Shack"
+        }
     }
-
-
 
     private fun unacitvatePositions(bord :List<Position>, gridview : GridView){
         activPosition = false

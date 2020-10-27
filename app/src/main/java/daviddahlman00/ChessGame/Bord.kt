@@ -2,6 +2,12 @@ package daviddahlman00.ChessGame
 
 class Bord() {
     val bord = mutableListOf<Position>()
+    private var lightKingPosition = 60
+    private var darkKingPosition = 4
+    private var shackLight = false
+    private var shackDark = false
+
+
     init {
         makeBord()
     }
@@ -16,10 +22,55 @@ class Bord() {
             }
         }
         setBordString()
+        lightKingPosition = 60
+        darkKingPosition = 4
+    }
+
+
+    fun getLightKingPosition() : Int {
+        return lightKingPosition
+    }
+
+    fun setLightKingPosition(pos : Int){
+        lightKingPosition = pos
+    }
+
+    fun getDarkKingPosition() : Int {
+        return darkKingPosition
+    }
+
+    fun setDarkKingPosition(pos : Int){
+        darkKingPosition = pos
     }
     private fun newBord(){
         bord.clear()
         makeBord()
+    }
+
+    fun isShack(whiteToGo : Boolean) : Boolean {
+        if (whiteToGo){
+            for (elm in bord){
+                if(elm.player == "dark"){
+                    if (lightKingPosition in legalMove(elm)){
+                        shackLight = true
+                    }
+                }
+            }
+            return shackLight
+        }else{
+            for (elm in bord){
+                if(elm.player == "light"){
+                    if (darkKingPosition in legalMove(elm)){
+                        shackDark = true
+                    }
+                }
+            }
+            return shackDark
+        }
+
+        shackDark = false
+        shackLight = false
+
     }
 
     fun legalMove(position : Position): List<Int>{
