@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
 
                     val possibleMoves = bord.legalMove(bord.bord[position])
+                    //val possibleMoves = checkSchackAfterMove(bord.bord[position], possibleMoves2, bord)
                     for (elm in possibleMoves){
                         if ((bord.bord[elm].xCord + bord.bord[elm].yCord) % 2 == 1){
                             gridView[elm].setBackgroundColor(Color.parseColor("#016362"))
@@ -139,6 +140,25 @@ class MainActivity : AppCompatActivity() {
                 gridview[pos].setBackgroundColor(Color.parseColor("#FFA6A5A5"))
             }
         }
+    }
+
+    private fun checkSchackAfterMove(position : Position, possibleMoves : List<Int>, bord: Bord) : List<Int> {
+        val legalMoves = mutableListOf<Int>()
+        for (move in possibleMoves){
+            val tempBord = Bord()
+            tempBord.bord = bord.bord
+            tempBord.bord[move].player = bord.bord[position.getPosition()].player
+            tempBord.bord[position.getPosition()].player = "none"
+            tempBord.setDarkKingPosition(bord.getDarkKingPosition())
+            tempBord.setLightKingPosition(bord.getLightKingPosition())
+
+            if (tempBord.isSchack(whiteToGo)){
+                legalMoves.add(move)
+            }
+
+            //legalMoves.add(move)
+        }
+        return legalMoves
     }
 
 }
