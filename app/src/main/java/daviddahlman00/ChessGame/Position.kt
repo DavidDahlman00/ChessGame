@@ -6,7 +6,7 @@ class Position(val name : String, var character : String = "", var player : Stri
     fun getImageId(context: Context) : Int {
         return context.resources.getIdentifier("drawable/$character", null, context.packageName)
     }
-    fun getPosition() : Int{
+    /*fun getPosition() : Int{
         return xCord + (8 * yCord)
-    }
+    }*/
 }

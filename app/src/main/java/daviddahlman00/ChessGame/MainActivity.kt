@@ -117,11 +117,11 @@ class MainActivity : AppCompatActivity() {
 
         when(bord.bord[to].character){
             "dark_king" -> {
-                val pos = bord.bord[to].getPosition()
+                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
                 bord.setDarkKingPosition(pos)
             }
             "light_king" -> {
-                val pos = bord.bord[to].getPosition()
+                val pos = bord.bord[to].xCord + 8 * bord.bord[to].yCord
                 bord.setLightKingPosition(pos)
             }
         }
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+/*
     private fun checkSchackAfterMove(position : Position, possibleMoves : List<Int>, bord: Bord) : List<Int> {
         val legalMoves = mutableListOf<Int>()
         for (move in possibleMoves){
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             //legalMoves.add(move)
         }
         return legalMoves
-    }
+    }*/
 
 }
 
