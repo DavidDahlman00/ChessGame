@@ -39,7 +39,11 @@ class MainActivity : AppCompatActivity() {
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
 
                     val possibleMoves = bord.legalMove(bord.bord[position])
-                    //val possibleMoves = checkSchackAfterMove(bord.bord[position], possibleMoves2, bord)
+                    if (bord.isSchack(whiteToGo)){
+                        possibleMoves.clear()
+                        possibleMoves.addAll(checkSchackAfterMove(position, possibleMoves, bord))
+                    }
+
                     for (elm in possibleMoves){
                         if ((bord.bord[elm].xCord + bord.bord[elm].yCord) % 2 == 1){
                             gridView[elm].setBackgroundColor(Color.parseColor("#016362"))
@@ -56,6 +60,10 @@ class MainActivity : AppCompatActivity() {
                     v.setBackgroundColor(Color.parseColor("#FF03DAC5"))
 
                     val possibleMoves = bord.legalMove(bord.bord[position])
+                    if (bord.isSchack(!whiteToGo)){
+                        possibleMoves.clear()
+                        possibleMoves.addAll(checkSchackAfterMove(position, possibleMoves, bord))
+                    }
                     for (elm in possibleMoves){
                         if ((bord.bord[elm].xCord + bord.bord[elm].yCord) % 2 == 1){
                             gridView[elm].setBackgroundColor(Color.parseColor("#016362"))
@@ -112,7 +120,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun move(from : Int, to : Int, bord: Bord){
-        if ((bord.bord[to].enPassant) && ((bord.bord[from].character == "light_pawn") || (bord.bord[from].character == "dark_pawn"))){
+        if ((bord.bord[to].enPassant) && ((to / 8) == (from / 8)) && ((bord.bord[from].character == "light_pawn") || (bord.bord[from].character == "dark_pawn"))){
             enPassantMove(from, to, bord)
         }else{
             enPassant(from, to, bord)
@@ -169,25 +177,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-/*
-    private fun checkSchackAfterMove(position : Position, possibleMoves : List<Int>, bord: Bord) : List<Int> {
+
+    private fun checkSchackAfterMove(position: Int, possibleMoves : MutableList<Int>, bord: Bord) : MutableList<Int> {
         val legalMoves = mutableListOf<Int>()
-        for (move in possibleMoves){
+        for (moveTo in possibleMoves){
             val tempBord = Bord()
-            tempBord.bord = bord.bord
-            tempBord.bord[move].player = bord.bord[position.getPosition()].player
-            tempBord.bord[position.getPosition()].player = "none"
+            tempBord.bord.clear()
+            for (pos in 0..63){
+                tempBord.bord[pos] = bord.bord[pos]
+            }
             tempBord.setDarkKingPosition(bord.getDarkKingPosition())
             tempBord.setLightKingPosition(bord.getLightKingPosition())
 
-            if (tempBord.isSchack(whiteToGo)){
-                legalMoves.add(move)
+            if (tempBord.bord[position].player == "light"){
+                move(position, moveTo, tempBord)
+                if (!tempBord.isSchack(whiteToGo)){
+                    legalMoves.add(moveTo)
+                }
+            }else{
+                move(position, moveTo, tempBord)
+                if (!tempBord.isSchack(!whiteToGo)){
+                    legalMoves.add(moveTo)
+                }
             }
-
-            //legalMoves.add(move)
         }
         return legalMoves
-    }*/
+    }
 
 }
 

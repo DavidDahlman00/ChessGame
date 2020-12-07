@@ -1,7 +1,7 @@
 package daviddahlman00.ChessGame
 
 class Bord() {
-    var bord = mutableListOf<Position>()
+    val bord = mutableListOf<Position>()
     private var lightKingPosition = 60
     private var darkKingPosition = 4
     private var schackLight = false
@@ -73,7 +73,7 @@ class Bord() {
 
     }
 
-    fun legalMove(position : Position): List<Int>{
+    fun legalMove(position : Position): MutableList<Int>{
         val legalMoves = mutableListOf<Int>()
         when(position.character){
             "dark_bishop" -> {
