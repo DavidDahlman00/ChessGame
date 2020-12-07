@@ -18,7 +18,7 @@ class Bord() {
             for (col in column){
                 val x = column.indexOf(col)
                 val y = rows.indexOf(row)
-                bord.add(Position(name = "col" + "," + "rows", character = "", player = "none", xCord = x, yCord = y))
+                bord.add(Position(name = "$x,$y", character = "", player = "none", xCord = x, yCord = y))
             }
         }
         setBordString()
