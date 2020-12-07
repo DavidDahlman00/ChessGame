@@ -96,17 +96,45 @@ class MainActivity : AppCompatActivity() {
         }else bord.bord[from].enPassant = (bord.bord[from].character == "dark_pawn") && (bord.bord[from].yCord == 1) && (bord.bord[to].yCord == 3)
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun move(from : Int, to : Int, bord: Bord){
-        enPassant(from, to, bord)
-        bord.bord[to].character = bord.bord[from].character
-        bord.bord[to].player = bord.bord[from].player
-        bord.bord[to].enPassant = bord.bord[from].enPassant
+    private fun enPassantMove(from : Int, to : Int, bord: Bord){
+        if ((bord.bord[from].player == "light")){
+            bord.bord[to - 8].character = "light_pawn"
+            bord.bord[to - 8].player = "light"
+        }else{
+            bord.bord[to + 8].character = "dark_pawn"
+            bord.bord[to + 8].player = "dark"
+        }
         bord.bord[from].character = ""
         bord.bord[from].player = "none"
-        bord.bord[from].enPassant = false
+        bord.bord[to].character = ""
+        bord.bord[to].player = "none"
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun move(from : Int, to : Int, bord: Bord){
+        if ((bord.bord[to].enPassant) && ((bord.bord[from].character == "light_pawn") || (bord.bord[from].character == "dark_pawn"))){
+            enPassantMove(from, to, bord)
+        }else{
+            enPassant(from, to, bord)
+            bord.bord[to].character = bord.bord[from].character
+            bord.bord[to].player = bord.bord[from].player
+            bord.bord[to].enPassant = bord.bord[from].enPassant
+            bord.bord[from].character = ""
+            bord.bord[from].player = "none"
+        }
+
+       // bord.bord[from].enPassant = false
         clickedPosision = -1
         moveList.clear()
+        if(whiteToGo){
+            for( i in 0..7){
+                bord.bord[24 + i].enPassant = false
+            }
+        }else{
+            for( i in 0..7){
+                bord.bord[32 + i].enPassant = false
+            }
+        }
         whiteToGo = !whiteToGo
 
         if (whiteToGo){
